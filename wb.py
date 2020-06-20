@@ -67,7 +67,7 @@ def remove_doubles():
     f = open('ids.txt', 'w')
     ids = list(set(lst))
     for x in ids:
-        f.write(f"{x}\n")
+        f.write(f"{str(x)}\n")
     f.close()
 
 def remove_id(user_id):
@@ -81,7 +81,7 @@ def remove_id(user_id):
             lst.remove(x)
     f = open('ids.txt', 'w')
     for x in lst:
-        f.write(f"{x}\n")
+        f.write(f"{str(x)}\n")
     f.close()
 
 jokes = {
@@ -141,10 +141,9 @@ def send_text(message):
         bot.send_message(message.chat.id, jokes[key])
     elif message.text == 'Щоденний прогноз':
         f = open('ids.txt', 'a+')
-        i = str(message.chat.id)
-        f.write(f"{i}\n")
+        f.write(f"{str(message.chat.id)}\n")
         f.close()
-        bot.send_message(454706315, f"{i}, {message.from_user.first_name} subscribed")
+        bot.send_message(454706315, f"{message.chat.id}, {message.from_user.first_name} subscribed")
         bot.send_message(message.chat.id, 'Гаразд! Щодня я повідомлятиму  погоду і прогноз на завтра у нашому місті!\n\nЩоб відписатись, напишіть "відписатись"')
         remove_doubles()
     elif message.text.lower() == 'відписатись':
