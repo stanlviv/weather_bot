@@ -76,33 +76,25 @@ stickers = ['CAACAgIAAxkBAALrvV7fu3s0_zfs8xasvoJQGKsHrJBhAAJoAgAC8QSXE1UbOzpI8oU
 'CAACAgIAAxkBAALryV7fvHFaN8R069vc2OeSN_4Zt2CWAAJuAgAC8QSXE1uHZ4K1F_AWGgQ',
 'CAACAgIAAxkBAALry17fvIgqkVvPpXRE5UWG2BJd1_MbAAJ3AgAC8QSXE-BntMxQcAyzGgQ',
 'CAACAgIAAxkBAALrzV7fvJ4VzgPvlEmYuKdE-nJ8fCQpAAJVAgAC8QSXE8iuk9VIU6KWGgQ',
-'CAACAgIAAxkBAALr3F7fznlsE8F7StUHjz_0WTmHkapfAAJnAgAC8QSXE21OmrwcOsfrGgQ',]
-
+'CAACAgIAAxkBAALr3F7fznlsE8F7StUHjz_0WTmHkapfAAJnAgAC8QSXE21OmrwcOsfrGgQ',
+'CAACAgIAAxkBAAL1z17uaODWTQYSfi3FueJDUtmgO3pSAAInAgAC8QSXE6Hq3A1zBpIPGgQ',]
 
 def weather_morning():
-    ids = []
-    f = open('ids.txt', 'r')
-    for x in f:
-        ids.append(int(x))
-    f.close()
-    ids = list(set(ids))
-    greeting = tm()
+    i = open('ids.txt', 'r')
+    ids = [int(x) for x in i]
+    i.close()
     for x in ids:
-        bot.send_message(x, greeting)
+        bot.send_message(x, tm())
         bot.send_message(x, lviv.show_weather())
         bot.send_sticker(x, random.choice(stickers))
         time.sleep(2)
 
 def weather_evening():
-    ids = []
-    f = open('ids.txt', 'r')
-    for x in f:
-        ids.append(int(x))
-    f.close()
-    ids = list(set(ids))
-    greeting = tm()
+    i = open('ids.txt', 'r')
+    ids = [int(x) for x in i]
+    i.close()
     for x in ids:
-        bot.send_message(x, greeting)
+        bot.send_message(x, tm())
         bot.send_message(x, 'Погода на завтра:')
         bot.send_message(x, lviv.show_forecast())
         bot.send_sticker(x, random.choice(stickers))
