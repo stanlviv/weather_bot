@@ -142,7 +142,7 @@ def send_text(message):
     elif message.text == 'Щоденний прогноз':
         f = open('ids.txt', 'a+')
         i = str(message.chat.id)
-        f.write(f"{i}")
+        f.write(f"{i}\n")
         f.close()
         bot.send_message(454706315, f"{i}, {message.from_user.first_name} subscribed")
         bot.send_message(message.chat.id, 'Гаразд! Щодня я повідомлятиму  погоду і прогноз на завтра у нашому місті!\n\nЩоб відписатись, напишіть "відписатись"')
