@@ -159,6 +159,11 @@ def send_text(message):
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAI7e16Bza6XNPdRIPl5el6vcLh7fnT7AAI7AAPAY3cktopQHxzqzrEYBA')
     elif message.text.lower() == 'котра година?':
         bot.send_message(message.chat.id, f"{datetime.datetime.now().hour}:{datetime.datetime.now().minute}")
+    elif message.text.lower() == 'show list':
+        f = open('ids.txt', 'r')
+        for x in f:
+            bot.send_message(message.chat.id, f"{x}")
+        f.close()
     else: 
         town = Weather(message.text)
         bot.send_message(message.chat.id, 'Сьогодні:')
