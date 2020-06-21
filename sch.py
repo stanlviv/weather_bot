@@ -66,8 +66,6 @@ def tm():
     greeting = f'{daytime}'
     return greeting
 
-lviv = Weather('Lviv')
-
 stickers = ['CAACAgIAAxkBAALrvV7fu3s0_zfs8xasvoJQGKsHrJBhAAJoAgAC8QSXE1UbOzpI8oUuGgQ',
 'CAACAgIAAxkBAALrv17fu6XUVxQlZmdTxJv2WTNT6BysAAKCAgAC8QSXE8_dt4mE8z_cGgQ',
 'CAACAgIAAxkBAALrwV7fu9_964BHMVkmSFabog0eiPbxAAJPAgAC8QSXE84NMf5xGmBZGgQ',
@@ -79,13 +77,16 @@ stickers = ['CAACAgIAAxkBAALrvV7fu3s0_zfs8xasvoJQGKsHrJBhAAJoAgAC8QSXE1UbOzpI8oU
 'CAACAgIAAxkBAALr3F7fznlsE8F7StUHjz_0WTmHkapfAAJnAgAC8QSXE21OmrwcOsfrGgQ',
 'CAACAgIAAxkBAAL1z17uaODWTQYSfi3FueJDUtmgO3pSAAInAgAC8QSXE6Hq3A1zBpIPGgQ',]
 
+lviv = Weather('Lviv')
+
 def weather_morning():
     i = open('ids.txt', 'r')
     ids = [int(x) for x in i]
     i.close()
+    weather = lviv.show_weather()
     for x in ids:
         bot.send_message(x, tm())
-        bot.send_message(x, lviv.show_weather())
+        bot.send_message(x, weather)
         bot.send_sticker(x, random.choice(stickers))
         time.sleep(2)
 
@@ -93,10 +94,11 @@ def weather_evening():
     i = open('ids.txt', 'r')
     ids = [int(x) for x in i]
     i.close()
+    forecast = lviv.show_forecast()
     for x in ids:
         bot.send_message(x, tm())
         bot.send_message(x, 'Погода на завтра:')
-        bot.send_message(x, lviv.show_forecast())
+        bot.send_message(x, forecast)
         bot.send_sticker(x, random.choice(stickers))
         time.sleep(2)
 
