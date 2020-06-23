@@ -3,6 +3,7 @@ import pyowm
 import datetime
 from pyowm import timeutils
 import random
+import pickle
 
 bot = telebot.TeleBot("1005149662:AAHV4mWgeo5qhHUxZXtxgI2L-hq4_yAMR7E")
 owm = pyowm.OWM("3f152ae62a9f057cdb1a9851e3b676cd", language='ua')
@@ -58,32 +59,6 @@ class Weather:
             s.append( f"{value.strftime('%A, %b %d, %H:%M')}:\n{x.get_detailed_status()}\nt: {x.get_temperature('celsius')['temp']}℃\n")
         return s
 
-def remove_doubles():
-    lst = []
-    f = open('ids.txt', 'r')
-    for x in f:
-        lst.append(int(x))
-    f.close()
-    f = open('ids.txt', 'w')
-    ids = list(set(lst))
-    for x in ids:
-        f.write(f"{str(x)}\n")
-    f.close()
-
-def remove_id(user_id):
-    lst = []
-    f = open('ids.txt', 'r')
-    for x in f:
-        lst.append(int(x))
-    f.close()
-    for x in lst:
-        if x == user_id:
-            lst.remove(x)
-    f = open('ids.txt', 'w')
-    for x in lst:
-        f.write(f"{str(x)}\n")
-    f.close()
-
 jokes = {
     1: '- В яку погоду так і хочеться дивитись серіали?\n - В яку?\n - Та в будь яку!',
     2: 'Якщо після двох холодних дощових днів настав сонячний і теплий день, значить це понеділок.',
@@ -125,7 +100,6 @@ def start_message(message):
     bot.send_message(message.chat.id, greeting, reply_markup=keyboard1)
     bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAI_S16MgxSgpd99fPxFqp3MFLxxmuDxAAITAAPAY3ckIMwNpzrtVGcYBA')
 
-
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text == 'Погода сьогодні':
@@ -140,14 +114,22 @@ def send_text(message):
         key = random.choice(range(1,11))
         bot.send_message(message.chat.id, jokes[key])
     elif message.text == 'Щоденний прогноз':
-        f = open('ids.txt', 'a+')
-        f.write(f"{str(message.chat.id)}\n")
-        f.close()
+        with open('ids.txt', 'rb') as i:
+            ids = pickle.load(i)
+        user_id = message.chat.id
+        user_name = message.from_user.first_name
+        ids.update({user_id: user_name})
+        with open('ids.txt', 'wb') as i:
+            pickle.dump(ids, i)
         bot.send_message(454706315, f"{message.chat.id}, {message.from_user.first_name} subscribed")
         bot.send_message(message.chat.id, 'Гаразд! Щодня я повідомлятиму  погоду і прогноз на завтра у нашому місті!\n\nЩоб відписатись, напишіть "відписатись"')
-        remove_doubles()
     elif message.text.lower() == 'відписатись':
-        remove_id(message.chat.id)
+        remove_user = message.chat.id
+        with open('ids.txt', 'rb') as i:
+            ids = pickle.load(i)
+        ids.pop(remove_user)
+        with open('ids.txt', 'wb') as i:
+            pickle.dump(ids, i)
         bot.send_message(454706315, f"{message.chat.id}, {message.from_user.first_name} unsubscribed")
         bot.send_message(message.chat.id, 'Гаразд. Сподіваюсь, я Вас не підвів. \nВи можете підписатись на розсилку будь коли знову! :)')
     elif message.text.lower() == 'привіт':
@@ -159,16 +141,15 @@ def send_text(message):
     elif message.text.lower() == 'котра година?':
         bot.send_message(message.chat.id, f"{datetime.datetime.now().hour}:{datetime.datetime.now().minute}")
     elif message.text.lower() == 'show list':
-        f = open('ids.txt', 'r')
-        for x in f:
-            bot.send_message(message.chat.id, f"{x}")
-        f.close()
-    else: 
+        with open('ids.txt', 'rb') as i:
+            ids = pickle.load(i)
+        for k, v in ids.items():
+            bot.send_message(454706315, f"{v}: {k}({type(k)})")
+    else:
         town = Weather(message.text)
         bot.send_message(message.chat.id, 'Сьогодні:')
         bot.send_message(message.chat.id, town.show_weather())
         bot.send_message(message.chat.id, 'Завтра:')
         bot.send_message(message.chat.id, town.show_forecast())
-
 
 bot.polling()
