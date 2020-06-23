@@ -5,7 +5,7 @@ import pyowm
 from pyowm import timeutils
 import random
 import schedule
-
+import pickle
 
 bot = telebot.TeleBot("1005149662:AAHV4mWgeo5qhHUxZXtxgI2L-hq4_yAMR7E")
 owm = pyowm.OWM("3f152ae62a9f057cdb1a9851e3b676cd", language='ua')
@@ -56,13 +56,13 @@ def tm():
     now = datetime.datetime.now()
     hour = now.hour+3
     if hour >= 6 and hour <12:
-        daytime = 'Добрий ранок!'
+        daytime = 'Доброго раноку'
     elif hour >=12 and hour <18:
-        daytime = 'Добрий день!'
+        daytime = 'Доброго дня'
     elif hour >=18 and hour <20:
-        daytime = 'Добрий вечір!'
+        daytime = 'Доброго вечора'
     else:
-        daytime = 'Доброї ночі!'
+        daytime = 'Доброї ночі'
     greeting = f'{daytime}'
     return greeting
 
@@ -80,26 +80,24 @@ stickers = ['CAACAgIAAxkBAALrvV7fu3s0_zfs8xasvoJQGKsHrJBhAAJoAgAC8QSXE1UbOzpI8oU
 lviv = Weather('Lviv')
 
 def weather_morning():
-    i = open('ids.txt', 'r')
-    ids = [int(x) for x in i]
-    i.close()
+    with open('ids.txt', 'rb') as i:
+        ids = pickle.load(i)
     weather = lviv.show_weather()
-    for x in ids:
-        bot.send_message(x, tm())
-        bot.send_message(x, weather)
-        bot.send_sticker(x, random.choice(stickers))
+    for k, v in ids.items():
+        bot.send_message(k, f"{tm()}, {v}!")
+        bot.send_message(k, weather)
+        bot.send_sticker(k, random.choice(stickers))
         time.sleep(2)
 
 def weather_evening():
-    i = open('ids.txt', 'r')
-    ids = [int(x) for x in i]
-    i.close()
+    with open('ids.txt', 'rb') as i:
+        ids = pickle.load(i)
     forecast = lviv.show_forecast()
-    for x in ids:
-        bot.send_message(x, tm())
-        bot.send_message(x, 'Погода на завтра:')
-        bot.send_message(x, forecast)
-        bot.send_sticker(x, random.choice(stickers))
+    for k, v in ids.items():
+        bot.send_message(k, f"{tm()}, {v}!")
+        bot.send_message(k, 'Погода на завтра:')
+        bot.send_message(k, forecast)
+        bot.send_sticker(k, random.choice(stickers))
         time.sleep(2)
 
 schedule.every().day.at('08:00').do(weather_morning)
