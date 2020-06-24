@@ -36,7 +36,7 @@ class Weather:
             tomorrow9 = timeutils.tomorrow(9)
             tomorrow12 = timeutils.tomorrow(12)
             tomorrow18 = timeutils.tomorrow(18)
-            tomorrow20 = timeutils.tomorrow(21)
+            tomorrow21 = timeutils.tomorrow(21)
             t9 = place.get_weather_at(tomorrow9)
             t12 = place.get_weather_at(tomorrow12)
             t18 = place.get_weather_at(tomorrow18)
