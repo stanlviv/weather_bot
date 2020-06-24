@@ -36,19 +36,22 @@ class Weather:
             tomorrow9 = timeutils.tomorrow(9)
             tomorrow12 = timeutils.tomorrow(12)
             tomorrow18 = timeutils.tomorrow(18)
+            tomorrow20 = timeutils.tomorrow(21)
             t9 = place.get_weather_at(tomorrow9)
             t12 = place.get_weather_at(tomorrow12)
             t18 = place.get_weather_at(tomorrow18)
+            t21 = place.get_weather_at(tomorrow21)
             temp9 = t9.get_temperature('celsius')['temp']
             temp12 = t12.get_temperature('celsius')['temp']
             temp18 = t18.get_temperature('celsius')['temp']
+            temp21 = t21.get_temperature('celsius')['temp']
             if place.will_be_rainy_at(tomorrow12):
                 rain = 'Дощитиме'
             else: rain = 'Буде сухо'
             if place.will_be_sunny_at(tomorrow12):
                 sun = 'та сонячно.'
             else: sun = 'та хмарно.'
-            return f"{rain} {sun}\n9:00 - {temp9}℃\n12:00 - {temp12}℃\n18:00 - {temp18}℃"
+            return f"{rain} {sun}\n9:00 - {temp9}℃\n12:00 - {temp12}℃\n18:00 - {temp18}℃\n21:00 - {temp21}℃"
         except Exception:
             return f"Вочевидь, такого міста немає :(\nСпробуйте ще раз!"
 
@@ -56,10 +59,10 @@ def tm():
     now = datetime.datetime.now()
     hour = now.hour+3
     if hour >= 6 and hour <12:
-        daytime = 'Доброго раноку'
+        daytime = 'Доброго ранку'
     elif hour >=12 and hour <18:
         daytime = 'Доброго дня'
-    elif hour >=18 and hour <20:
+    elif hour >=18 and hour <22:
         daytime = 'Доброго вечора'
     else:
         daytime = 'Доброї ночі'
