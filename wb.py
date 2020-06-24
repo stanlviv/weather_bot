@@ -144,7 +144,7 @@ def send_text(message):
         with open('ids.txt', 'rb') as i:
             ids = pickle.load(i)
         for k, v in ids.items():
-            bot.send_message(message.chat.id, f"{v}: {k}({type(k)})")
+            bot.send_message(message.chat.id, f"{v}: {k}")
     else:
         town = Weather(message.text)
         bot.send_message(message.chat.id, 'Сьогодні:')
