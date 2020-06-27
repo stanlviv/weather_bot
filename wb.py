@@ -73,8 +73,6 @@ def parse_lviv():
         for item in items:
             news.update({item.find('a', class_='DY5T1d').get_text(): item.find('a', class_='DY5T1d').get('href')})
         return news
-    else:
-        return 'Opps! Щось піщло не так.'
 
 def parse_ukraine():
     html = requests.get('https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRFZxYUdjU0FuVnJHZ0pWUVNnQVAB/sections/CAQiUENCQVNOZ29JTDIwdk1EVnFhR2NTQW5WckdnSlZRU0lPQ0FRYUNnb0lMMjB2TURkME1qRXFFZ29RRWc3UW85QzYwWURRc05HWDBMM1FzQ2dBKioIAComCAoiIENCQVNFZ29JTDIwdk1EVnFhR2NTQW5WckdnSlZRU2dBUAFQAQ?hl=uk&gl=UA&ceid=UA%3Auk')
