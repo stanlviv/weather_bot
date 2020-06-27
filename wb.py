@@ -64,8 +64,8 @@ class Weather:
             s.append( f"{value.strftime('%A, %b %d, %H:%M')}:\n{x.get_detailed_status()}\nt: {x.get_temperature('celsius')['temp']}℃\n")
         return s
 
-def parse_lviv():
-    html = requests.get('https://news.google.com/topics/CAAqHAgKIhZDQklTQ2pvSWJHOWpZV3hmZGpJb0FBUAE/sections/CAQiTkNCSVNORG9JYkc5allXeGZkakpDRUd4dlkyRnNYM1l5WDNObFkzUnBiMjV5Q2hJSUwyMHZNR1EzWDI1NkNnb0lMMjB2TUdRM1gyNG9BQSowCAAqLAgKIiZDQklTRmpvSWJHOWpZV3hmZGpKNkNnb0lMMjB2TUdRM1gyNG9BQVABUAE?hl=uk&gl=UA&ceid=UA%3Auk')
+def parse_world():
+    html = requests.get('https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx1YlY4U0FuVnJHZ0pWUVNnQVAB?hl=uk&gl=UA&ceid=UA%3Auk')
     if html.status_code == 200:
         soup = BeautifulSoup(html.text, 'html.parser')
         items = soup.find_all('h3', class_='ipQwMb ekueJc gEATFF RD0gLb')
@@ -101,7 +101,7 @@ keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard1.row('Погода сьогодні', 'Погода завтра')
 keyboard1.row('Погода на наступні 5 днів')
 keyboard1.row('Пожартуй', 'Щоденний прогноз')
-keyboard1.row('top-10 news Lviv', 'top-10 news Ukraine')
+keyboard1.row('top-10 world news', 'top-10 news Ukraine')
 
 def tm():
     now = datetime.datetime.now()
@@ -161,9 +161,9 @@ def send_text(message):
     elif message.text.lower() == 'бувай':
         bot.send_message(message.chat.id, 'See you later, aligator!')
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAI7e16Bza6XNPdRIPl5el6vcLh7fnT7AAI7AAPAY3cktopQHxzqzrEYBA')
-    elif message.text == 'top-10 news Lviv':
-        n = parse_lviv() 
-        bot.send_message(message.chat.id, 'Новини Львова:') 
+    elif message.text == 'top-10 world news':
+        n = parse_world()
+        bot.send_message(message.chat.id, 'Новини світу:') 
         i=1
         for k, v in n.items():
             x = f"[{k}]({'https://news.google.com/' + v})"
