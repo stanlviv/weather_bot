@@ -1,5 +1,0 @@
-pytelegrambotapi == 3.6.7
-pyowm == 2.10.0
-# schedule == 0.6.0
-beautifulsoup4 == 4.9.1
-requests == 2.23.0
