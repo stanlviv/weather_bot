@@ -247,8 +247,8 @@ def send_text(message):
     else:
         town = Weather(message.text)
         bot.send_message(message.chat.id, 'Сьогодні:')
-        bot.send_message(message.chat.id, town.show_weather())
+        bot.send_message(message.chat.id, town.show_weather(), parse_mode = 'Markdown')
         bot.send_message(message.chat.id, 'Завтра:')
-        bot.send_message(message.chat.id, town.show_forecast())
+        bot.send_message(message.chat.id, town.show_forecast(), parse_mode = 'Markdown')
 
 bot.polling()
