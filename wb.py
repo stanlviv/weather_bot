@@ -241,7 +241,7 @@ def send_text(message):
     elif message.text.lower() == 'special days':
         try:
             result = holidays_names()
-            bot.send_message(message.chat.id, f"*Сьогоднішні свята:*\n{result[0]}\n*Іменини:*\n{result[1]}", parse_mode='Markdown')
+            bot.send_message(message.chat.id, f"*Сьогодні відзначають:*\n{result[0]}\n*Іменини:*\n{result[1]}", parse_mode='Markdown')
         except Exception:
             bot.send_message(message.chat.id, "Error")
     else:
