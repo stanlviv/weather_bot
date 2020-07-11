@@ -142,7 +142,7 @@ def weather_morning():
         try:
             bot.send_message(k, f"{tm()}, {v}!")
             bot.send_message(k, weather, parse_mode='Markdown')
-            bot.send_message(k, f"*Сьогоднішні свята:*\n{result[0]}\n*Іменини:*\n{result[1]}", parse_mode='Markdown')
+            bot.send_message(k, f"*Сьогодні відзначають:*\n{result[0]}\n*Іменини:*\n{result[1]}", parse_mode='Markdown')
             count+=1
             time.sleep(1)
         except Exception:
