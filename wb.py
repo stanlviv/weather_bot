@@ -181,7 +181,7 @@ def send_text(message):
         for x in s:
             bot.send_message(message.chat.id, x)
     elif message.text == 'Пожартуй':
-        key = random.choice(range(1,11))
+        key = random.choice(range(1,13))
         bot.send_message(message.chat.id, jokes[key])
     elif message.text == 'Щоденний прогноз':
         user_id = message.chat.id
