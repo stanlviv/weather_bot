@@ -306,10 +306,10 @@ def send_text(message):
     elif message.text.lower() == 'send to all users':
         try:
             record = get_db()
-            for row1, row2 in record:
-                bot.send_message(row1, f"Привіт, {row2}!\nТепер я вмію робити розсилку погоди не лише у Львові!\nЯкщо Ви у іншому місті, напишіть 'моя локація' щоб я міг повідомляти погоду саме для Вас :)\nЗа додатковою інформацією виберіть команду '/help'\nГарного дня!")
+            for x in record:
+                bot.send_message(x[0], f"Привіт, {x[1]}!\nТепер я вмію робити розсилку погоди не лише у Львові!\nЯкщо Ви у іншому місті, напишіть 'моя локація' щоб я міг повідомляти погоду саме для Вас :)\nЗа додатковою інформацією виберіть команду '/help'\nГарного дня!")
         except Exception:
-            bot.send_message(454706315, f"Smth went wrong ({row2})")
+            bot.send_message(454706315, f"Smth went wrong ({x[1]})")
     else:
         town = Weather(message.text)
         bot.send_message(message.chat.id, 'Сьогодні:')
