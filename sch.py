@@ -105,7 +105,7 @@ class Weather:
                     if place.will_be_sunny_at(tomorrow12):
                         sun = 'та сонячно.'
                     else: sun = 'та хмарно.'
-                    return f"*{rain} {sun}*\n9:00 - {temp9}℃\n12:00 - {temp12}℃\n18:00 - {temp18}℃\n21:00 - {temp21}℃"
+                    return f"*{rain} {sun}*\n9:00 - {temp9:.1f}℃\n12:00 - {temp12:.1f}℃\n18:00 - {temp18:.1f}℃\n21:00 - {temp21:.1f}℃"
                 except Exception:
                     i+=1
                     time.sleep(2)
