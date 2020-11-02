@@ -33,7 +33,7 @@ class Weather:
                     place_wind = place.get_wind()
                     place_status = place.get_detailed_status()
                     place_pressure = place.get_pressure()
-                    return f"*{place_status.capitalize()} у місті {point_name}.*\nТемпература: {place_temp['temp']}℃\nВологість: {place_hum}%\nТиск: {place_pressure['press']} hPa\nШвидкість вітру: {place_wind['speed']} м/с"
+                    return f"*{place_status.capitalize()} у місті {point_name}.*\nТемпература: {place_temp['temp']:.1f}℃\nВологість: {place_hum}%\nТиск: {place_pressure['press']} hPa\nШвидкість вітру: {place_wind['speed']} м/с"
                 except Exception:
                     i+=1
                     time.sleep(2)
@@ -49,7 +49,7 @@ class Weather:
                     place_wind = place.get_wind()
                     place_status = place.get_detailed_status()
                     place_pressure = place.get_pressure()
-                    return f"*{place_status.capitalize()} у місті {point_name}.*\nТемпература: {place_temp['temp']}℃\nВологість: {place_hum}%\nТиск: {place_pressure['press']} hPa\nШвидкість вітру: {place_wind['speed']} м/с"
+                    return f"*{place_status.capitalize()} у місті {point_name}.*\nТемпература: {place_temp['temp']:.1f}℃\nВологість: {place_hum}%\nТиск: {place_pressure['press']} hPa\nШвидкість вітру: {place_wind['speed']} м/с"
                 except Exception:
                     i+=1
                     time.sleep(2)
@@ -79,7 +79,7 @@ class Weather:
                     if place.will_be_sunny_at(tomorrow12):
                         sun = 'та сонячно.'
                     else: sun = 'та хмарно.'
-                    return f"*{rain} {sun}*\n9:00 - {temp9}℃\n12:00 - {temp12}℃\n18:00 - {temp18}℃\n21:00 - {temp21}℃"
+                    return f"*{rain} {sun}*\n9:00 - {temp9:.1f}℃\n12:00 - {temp12:.1f}℃\n18:00 - {temp18:.1f}℃\n21:00 - {temp21:.1f}℃"
                 except Exception:
                     i+=1
                     time.sleep(2)
@@ -138,7 +138,7 @@ podia_stickers = [
     'CAACAgIAAxkBAAEBC0tfDDEEHstO0sx3bv1kHjAKdE7BxQACggIAAvEElxPP3beJhPM_3BoE',
 ]
 
-quarantine_stickers  =[
+quarantine_stickers = [
     'CAACAgIAAxkBAAEBCydfDC4deg2Tf11qClLbx75g0JRlpgACOcgBAAFji0YMW3WeIv3odJ4aBA',
     'CAACAgIAAxkBAAEBCylfDC4qgvDm-HKQuLzVAhMfwqTw2QACOMgBAAFji0YMf6ZMpnzkjYQaBA',
     'CAACAgIAAxkBAAEBCytfDC401umtYaBX8ICARKNVtTrh0wACOsgBAAFji0YM4exOQQQSl-UaBA',
