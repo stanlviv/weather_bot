@@ -202,6 +202,20 @@ def get_db():
     except Error as error:
         return f"Упс, помилка! {error}"
 
+def delete_db(user_id, username):
+    try:
+        connection = mysql.connector.connect(host='eu-cdbr-west-03.cleardb.net',database='heroku_827e33f01765a32',user='b9aaef9756aadc',password='4817bc17')
+        sql_query = f"DELETE FROM IDs WHERE UserID = {user_id}"
+        cursor = connection.cursor()
+        cursor.execute(sql_query)
+        connection.commit()
+        bot.send_message(454706315, f"{username} *deleted from DB*", parse_mode='Markdown')
+    except Error as error:
+        bot.send_message(454706315, f"DB deletion error: {error}")
+
+#users not delivered
+unsubs = []
+
 def weather_morning():
     records = get_db()
     holidays, names = holidays_names()
@@ -210,6 +224,10 @@ def weather_morning():
     count = 0
     not_delivered = []
     for userid, username, city, latitude, longitude in records:
+        if userid in unsubs:
+            delete_db(userid, username)
+            unsubs.remove(userid)
+            continue
         try:
             if city != None:
                 weather1 = Weather(latitude=latitude, longitude=longitude).show_weather()
@@ -232,6 +250,7 @@ def weather_morning():
                 count+=1
             time.sleep(1)
         except Exception:
+            unsubs.append(userid)
             not_delivered.append(username)
     bot.send_message(454706315, f"*delivered:* {count}/{len(records)}\n*not delivered:* {len(not_delivered)} {not_delivered}", parse_mode='Markdown')
 
@@ -251,6 +270,10 @@ def weather_evening():
     else:
         stiker = gus_stickers
     for userid, username, city, latitude, longitude in records:
+        if userid in unsubs:
+            delete_db(userid, username)
+            unsubs.remove(userid)
+            continue
         try:
             if city != None:
                 forecast1 = Weather(latitude=latitude, longitude=longitude).show_forecast()
@@ -263,6 +286,7 @@ def weather_evening():
                 count+=1
             time.sleep(1)
         except Exception:
+            unsubs.append(userid)
             not_delivered.append(username)
     bot.send_message(454706315, f"*delivered:* {count}/{len(records)}\n*not delivered:* {len(not_delivered)} {not_delivered}", parse_mode='Markdown')
 
